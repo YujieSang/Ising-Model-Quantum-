@@ -4,23 +4,7 @@ import matplotlib.pyplot as plt
 from qiskit.visualization import plot_histogram
 
 def Ising_3D(Lx, Ly, Lz, J, g, dt, r):
-    """
-    3-D Transverse-Field Ising Model (TFIM) on an Lx×Ly×Lz cubic lattice.
 
-    H = -J Σ_<n,n'> Z_n Z_n'  - g Σ_n X_n
-        nearest neighbours <n,n'> along x, y, z.
-
-    Parameters
-    ----------
-    Lx, Ly, Lz : int
-        Linear dimensions of the lattice.
-    J, g       : float
-        Coupling (ZZ) and transverse-field strengths.
-    dt         : float
-        Duration of one Trotter slice (total time / r).
-    r          : int
-        Number of Trotter slices.
-    """
     N = Lx * Ly * Lz
     qc = QuantumCircuit(N, N)
 
@@ -31,7 +15,7 @@ def Ising_3D(Lx, Ly, Lz, J, g, dt, r):
 
     # 2) r Trotter slices
     for _ in range(r):
-        # ---- X-direction neighbours ----
+        #  X-direction neighbours 
         for x in range(Lx - 1):
             for y in range(Ly):
                 for z in range(Lz):
@@ -41,7 +25,7 @@ def Ising_3D(Lx, Ly, Lz, J, g, dt, r):
                     qc.rz(2 * J * dt, j)
                     qc.cx(i, j)
 
-        # ---- Y-direction neighbours ----
+        #  Y-direction neighbours 
         for x in range(Lx):
             for y in range(Ly - 1):
                 for z in range(Lz):
@@ -51,7 +35,7 @@ def Ising_3D(Lx, Ly, Lz, J, g, dt, r):
                     qc.rz(2 * J * dt, j)
                     qc.cx(i, j)
 
-        # ---- Z-direction neighbours ----
+        #  Z-direction neighbours 
         for x in range(Lx):
             for y in range(Ly):
                 for z in range(Lz - 1):
@@ -61,7 +45,7 @@ def Ising_3D(Lx, Ly, Lz, J, g, dt, r):
                     qc.rz(2 * J * dt, j)
                     qc.cx(i, j)
 
-        # ---- Transverse-field RX gates ----
+        # Transverse-field RX gates
         for q in range(N):
             qc.rx(2 * g * dt, q)
 
@@ -72,7 +56,7 @@ def Ising_3D(Lx, Ly, Lz, J, g, dt, r):
     return qc
 
 
-# ---------- Example run ----------
+#  Example run 
 Lx, Ly, Lz = 3, 3, 3          # 2×2×2 lattice → 8 qubits
 J, g       = 1.0, 0.5
 t_total    = 1.0
