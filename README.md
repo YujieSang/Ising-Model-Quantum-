@@ -1,2 +1,9 @@
 # Ising-Model-Quantum-
-Using Quantum computer to simulate Ising mode
+## Requirement
+  You need to first follow ibm qiskit guide to install qiskit, qiskit-aer, ibm runtime, etc
+
+## Parameters
+  n: number of qubits
+  J: parameter in Ising model
+  r: # of Trotter slices
+  
